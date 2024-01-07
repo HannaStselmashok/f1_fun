@@ -29,7 +29,7 @@ Table 2 [races order](races_order_2023.csv)
 
 ![image](https://github.com/HannaStselmashok/f1_fun/assets/99286647/f591949c-a9c1-46f7-bdf1-1883182a82f5)
 
-6. Find the racers with the most intense battle during the championship
+6. [Find](scripts/sweaty_rank.sql) the racers with the most intense battle during the championship
 
 ![image](https://github.com/HannaStselmashok/f1_fun/assets/99286647/de90056e-7855-439e-ba62-9ec809392b9d)
 ![image](https://github.com/HannaStselmashok/f1_fun/assets/99286647/029672e7-160c-45ac-b80f-0d63ba524a98)
