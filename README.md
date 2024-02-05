@@ -25,12 +25,81 @@ LIMIT 5
 
 ![image](https://github.com/HannaStselmashok/f1_fun/assets/99286647/3f7b25da-c615-429e-854c-c80d444c6ffb)
 
-2. [Changing data type](scripts/changing_data_type.sql) to integer for position column (replace NC / DQ with 20)
+2. Changing data type to integer for position column (replace NC / DQ with 20)
+```sql
+--Expression ~ '^\d+$' check if the data in a cell is an integer number
+--if it is - change data type to integer
+--if it's not - replace the value with 20
+
+SELECT 
+    case 
+        when position ~ '^\d+$'
+        then cast(position as integer)
+        else 20
+    end as position
+FROM 
+    formula1_data
+```
 
 Table 2 [races order](races_order_2023.csv)
 
 ## Fun queries
-1. [Find](scripts/first_driver_ratio.sql) the average position of every racer during the championship; total points, the share of points contributed by the team's lead driver
+1. Find the average position of every racer during the championship; total points, the share of points contributed by the team's lead driver
+```sql
+WITH drivers_ranked as (
+
+    SELECT 
+        team_name,
+        driver_name,
+        avg(
+            case 
+                when position ~ '^\d+$'
+                then cast(position as integer)
+                else 20
+            end
+        ) as average_position,
+        sum(points) as sum_points,
+        row_number()
+        over (
+            partition by team_name 
+            order by sum(points) desc
+            ) as row_number_drivers
+    FROM 
+        formula1_data
+    GROUP BY 
+        1, 2
+    
+), drivers_ranked_main as (
+
+    SELECT 
+        team_name,  
+        driver_name,
+        round(average_position, 2) as average_position,
+        sum_points,
+        row_number_drivers
+    FROM
+        drivers_ranked
+    WHERE 
+        row_number_drivers <= 2
+    ORDER BY 
+        1, 4 desc
+        
+)
+
+SELECT 
+    team_name,
+    driver_name,
+    average_position,
+    sum_points,
+    case 
+        when row_number_drivers = 1
+        then round(sum_points / sum(sum_points)
+            over (partition by team_name) * 100, 2)
+        else null 
+    end as first_driver_ratio
+FROM
+    drivers_ranked_main
+```
 
 ![image](https://github.com/HannaStselmashok/f1_fun/assets/99286647/4dddf925-cf97-4def-91fa-4add6d64f8f6)
 
