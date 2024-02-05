@@ -4,7 +4,24 @@ Practicing PostgreSQL using f1 data
 ## Uploading and transforming the data
 Table 1 [2023 Race Results](Formula1_2023season_raceResults.csv)
 
-1. [Renaming the columns](scripts/f1_race_results_rename_columns.sql)
+1. Renaming the columns
+```sql
+ALTER TABLE public.formula1_data RENAME COLUMN "Track" TO track_country;
+ALTER TABLE public.formula1_data RENAME COLUMN "Position" TO "position";
+ALTER TABLE public.formula1_data RENAME COLUMN "No" TO driver_number;
+ALTER TABLE public.formula1_data RENAME COLUMN "Driver" TO driver_name;
+ALTER TABLE public.formula1_data RENAME COLUMN "Team" TO team_name;
+ALTER TABLE public.formula1_data RENAME COLUMN "Starting Grid" TO starting_grid;
+ALTER TABLE public.formula1_data RENAME COLUMN "Laps" TO laps;
+ALTER TABLE public.formula1_data RENAME COLUMN "Time/Retired" TO finish_time_text;
+ALTER TABLE public.formula1_data RENAME COLUMN "Points" TO points;
+ALTER TABLE public.formula1_data RENAME COLUMN "Set Fastest Lap" TO has_set_fastest_lap;
+ALTER TABLE public.formula1_data RENAME COLUMN "Fastest Lap Time" TO fastest_lap_time;
+
+SELECT *
+FROM formula1_data
+LIMIT 5
+```
 
 ![image](https://github.com/HannaStselmashok/f1_fun/assets/99286647/3f7b25da-c615-429e-854c-c80d444c6ffb)
 
