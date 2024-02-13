@@ -256,7 +256,7 @@ ORDER BY
 
 ![image](https://github.com/HannaStselmashok/f1_fun/assets/99286647/f591949c-a9c1-46f7-bdf1-1883182a82f5)
 
-5. [Find](scripts/sweaty_rank.sql) the racers with the most intense battle during the championship
+5. Find the racers with the most intense battle during the championship
 
 ```sql
 WITH drivers_sum_points as (
